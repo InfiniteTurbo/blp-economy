@@ -7,5 +7,6 @@
 - [ ] Balance Interface: Interface needs to be hidden by default. Only show the users balance on each account for 10 seconds when they run /balance.
 - [ ] Banking Interface: Show "Welcome back, F/L Character Name" instead of "Welcome back, username" - for example "Welcome back, Joe King"
 - [ ] Logging: Log all transactions to a Discord webhook.
+- [ ] Paychecks: Get a specific amount of money for each job.
 
 ### Note: Add [X] in a task to mark it complete.
