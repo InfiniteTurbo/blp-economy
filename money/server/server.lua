@@ -15,13 +15,16 @@ AddEventHandler('NAT2K15:UPDATEMONEY', function()
 			discord = string.sub(v, 9)
 		end
 	end
-    MySQL.Async.fetchAll("SELECT * FROM money WHERE steam = @steam", {["@steam"] = steam}, function(data) 
+    MySQL.Async.fetchAll("SELECT * FROM s_char WHERE identification = @steam", {["@steam"] = steam}, function(data) 
         if(data[1] == nil) then
-            MySQL.Async.execute("INSERT INTO money (steam, discord, bank) VALUES (@steam, @discord, @bank)", {["@steam"] = steam, ["@discord"] = discord, ["@bank"] = config.starting_money })
-            accounts[src] = {steam = steam, discord = discord, amount = 0, bank = config.starting_money, cycle = config.cycle_amount}
-            TriggerClientEvent('NAT2K15:UPDATECLIENTMONEY', src, accounts)
+				Citizen.CreateThread(function()
+				  while true do
+				    print("Looking for a character...")
+				    Citizen.Wait(3000)
+				  end
+				end)
         else 
-            accounts[src] = {steam = steam, discord = discord, amount = data[1].amount, bank = data[1].bank, cycle = config.cycle_amount}
+            accounts[src] = {steam = steam, amount = data[1].cash, bank = data[1].bank, cycle = config.cycle_amount}
             TriggerClientEvent('NAT2K15:UPDATECLIENTMONEY', src, accounts)
         end
     end)
@@ -46,9 +49,9 @@ end
 AddEventHandler('playerDropped', function(reason) 
     local src = source
     local steam = GetPlayerIdentifier(src, 0)
-    MySQL.Async.fetchAll("SELECT * FROM money WHERE steam = @steam", {["@steam"] = steam}, function(data) 
+    MySQL.Async.fetchAll("SELECT * FROM s_char WHERE steam = @steam", {["@steam"] = steam}, function(data) 
         if(data[1] ~= nil) then
-            MySQL.Async.execute("UPDATE money SET amount = @amount, bank = @bank WHERE steam = @steam", {["@steam"] = steam, ["@amount"] = accounts[src].amount, ["@bank"] = accounts[src].bank})
+            MySQL.Async.execute("UPDATE s_char SET cash = @amount, bank = @bank WHERE steam = @steam", {["@steam"] = steam, ["@amount"] = accounts[src].amount, ["@bank"] = accounts[src].bank})
         end
     end)
 end)
