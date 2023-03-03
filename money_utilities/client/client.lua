@@ -77,8 +77,7 @@ AddEventHandler('currentbalance1', function(balance)
 	SendNUIMessage({
 		type = "balanceHUD",
 		balance = balance,
-		player = playerName,
-		interfaceActive = false
+		player = playerName
 	})
 end)
 --===============================================
