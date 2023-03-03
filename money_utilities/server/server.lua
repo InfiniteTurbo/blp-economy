@@ -10,7 +10,7 @@ AddEventHandler('bank:deposit', function(amount)
 	local xPlayer = exports.money:getaccount(_source)
 	amount = tonumber(amount)
 	if xPlayer == nil or amount == nil or amount < 0 then
-		exports.money:bankNotify(_source, "There was an error getting the account Information")
+		exports.money:bankNotify(_source, "There was an error getting the account information.")
 	else
 		local quickmath = xPlayer.amount - amount;
 		if(quickmath < 0 or quickmath == nil) then
@@ -18,7 +18,7 @@ AddEventHandler('bank:deposit', function(amount)
 		else 
 			local fix = {cash = quickmath, bank = xPlayer.bank + amount}
 			exports.money:updateaccount(_source, fix)
-			exports.money:bankNotify(_source, "You have deposited: ~g~$" .. amount)
+			exports.money:bankNotify(_source, "You have deposited ~g~$" .. amount)
 		end
 	end
 end)
@@ -30,7 +30,7 @@ AddEventHandler('bank:withdraw', function(amount)
 	local xPlayer = exports.money:getaccount(_source)
 	amount = tonumber(amount)
 	if xPlayer == nil or amount == nil or amount < 0 then
-		exports.money:bankNotify(_source, "There was an error getting the account Information")
+		exports.money:bankNotify(_source, "There was an error getting the account information.")
 	else
 		local quickmath = xPlayer.bank - amount;
 		if(quickmath < 0 or quickmath == nil) then
@@ -38,7 +38,7 @@ AddEventHandler('bank:withdraw', function(amount)
 		else 
 			local fix = {cash = xPlayer.amount + amount, bank = quickmath}
 			exports.money:updateaccount(_source, fix)
-			exports.money:bankNotify(_source, "You have withdraw: ~g~$" .. amount)
+			exports.money:bankNotify(_source, "You have withdrawn ~g~$" .. amount)
 		end
 	end
 end)
@@ -48,7 +48,7 @@ AddEventHandler('bank:balance', function()
 	local _source = source
 	local xPlayer = exports.money:getaccount(_source)
 	if xPlayer == nil then
-		exports.money:bankNotify(_source, "There was an error getting the account Information")
+		exports.money:bankNotify(_source, "There was an error getting the account information.")
 	else
 		TriggerClientEvent('currentbalance1', _source, xPlayer.bank)
 	end
@@ -65,21 +65,21 @@ AddEventHandler('bank:transfer', function(to, amountt)
 	if tonumber(_source) == rip then
 		exports.money:bankNotify(_source, "You cannot transfer funds to yourself.")
 	elseif (amount == nil or amount < 0) then
-		exports.money:bankNotify(_source, "Invalid amount.")
+		exports.money:bankNotify(_source, "An amount was not specified.")
 	else
 		if (rip == nil) then
 			exports.money:bankNotify(_source, "You cannot transfer funds to yourself.")
 		else 
 			local quickmath = xPlayer.bank - amount;
 			if(quickmath < 0 or quickmath == nil) then
-				exports.money:bankNotify(_source, "There was an error getting the account Information.")
+				exports.money:bankNotify(_source, "There was an error getting the account information.")
 			else 
 				local xarray = {cash = xPlayer.amount, bank = quickmath}
 				local zarray = {cash = zPlayer.amount, bank = zPlayer.bank + amount}
 				exports.money:updateaccount(_source, xarray)
 				exports.money:updateaccount(rip, zarray)
-				exports.money:bankNotify(_source, "You have transfered ~r~$" .. amount .. " to " .. GetPlayerName(tonumber(to)) .. " [#" .. to .. "]")
-				exports.money:bankNotify(rip, "You have received: ~g~$" .. amount .. " from ~g~" .. GetPlayerName(tonumber(_source)) .. " [#" .. _source .. "]")
+				exports.money:bankNotify(_source, "You have transfered ~r~$" .. amount .. " to ~b~" .. GetPlayerName(tonumber(to)) .. " [#" .. to .. "]")
+				exports.money:bankNotify(rip, "You have received ~g~$" .. amount .. " from ~b~" .. GetPlayerName(tonumber(_source)) .. " [#" .. _source .. "]")
 			end	
 		end
 	end
@@ -112,7 +112,7 @@ RegisterCommand('givecash', function(source, args, message)
 						local zarray = {cash = zPlayer.amount + amount, bank = zPlayer.bank}
 						exports.money:updateaccount(_source, xarray)
 						exports.money:updateaccount(id, zarray)
-						exports.money:bankNotify(id, "You have received: ~g~$" .. amount .. " from ~g~" .. GetPlayerName(tonumber(_source)) .. " [#" .. _source .. "]")
+						exports.money:bankNotify(id, "You have received ~g~$" .. amount .. " from ~b~" .. GetPlayerName(tonumber(_source)) .. " [#" .. _source .. "]")
 						TriggerClientEvent("chat:addMessage", source, {template = '<div style="padding: 0.5vw; text-align: center; margin: 0.5vw; background-color: rgb(144,238,144); border-radius: 3px;"><b>{0}</b></div>', args = {"You sent $" .. amount .. " to [#" .. id .. "] " .. name}})
 					end
 				end
@@ -148,7 +148,7 @@ RegisterCommand('pay', function(source, args, message)
 						local zarray = {cash = zPlayer.amount, bank = zPlayer.bank + amount}
 						exports.money:updateaccount(_source, xarray)
 						exports.money:updateaccount(id, zarray)
-						exports.money:bankNotify(id, "You have received: ~g~$" .. amount .. " from ~g~" .. GetPlayerName(tonumber(_source)) .. " [#" .. _source .. "]")
+						exports.money:bankNotify(id, "You have received ~g~$" .. amount .. " from ~b~" .. GetPlayerName(tonumber(_source)) .. " [#" .. _source .. "]")
 						TriggerClientEvent("chat:addMessage", source, {template = '<div style="padding: 0.5vw; text-align: center; margin: 0.5vw; background-color: rgb(144,238,144); border-radius: 3px;"><b>{0}</b></div>', args = {"You sent $" .. amount .. " to [#" .. id .. "] " .. name}})
 					end
 				end
